@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+body{height:100vh;overflow:hidden;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#ff8fb7,#ff6b9a,#c471ed,#8e54e9);background-size:400% 400%;animation:bg 15s ease infinite;}
+@keyframes bg{0%{background-position:0 50%;}50%{background-position:100% 50%;}100%{background-position:0 50%;}}
+canvas{position:fixed;top:0;left:0;z-index:-1;}
+.card{width:90%;max-width:650px;padding:40px;background:rgba(255,255,255,.15);backdrop-filter:blur(15px);border-radius:25px;box-shadow:0 15px 45px rgba(0,0,0,.2);text-align:center;color:white;animation:fade .8s;}
+@keyframes fade{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+h1{font-family:"Dancing Script";font-size:55px;margin-bottom:20px;animation:heartbeat 1.3s infinite;}
+@keyframes heartbeat{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+p{font-size:18px;line-height:1.8;margin:20px 0;}
+button{border:none;padding:15px 35px;margin:10px;border-radius:50px;cursor:pointer;font-size:18px;font-weight:bold;transition:.35s;}
+.yes{background:#ff4f8b;color:white;box-shadow:0 0 20px #ff4f8b;}
+.yes:hover{transform:scale(1.08);}
+.no{background:white;color:#ff4f8b;position:relative;}
+#emoji{font-size:70px;margin-bottom:20px;}
+.bouquet{animation:fade .8s}.bouquet h1{font-size:50px;animation:none}.bouquet-art{font-size:90px;animation:bloom 2s ease-in-out infinite alternate}@keyframes bloom{from{transform:scale(.96)}to{transform:scale(1.04)}}
+</style>
+</head>
+<body>
+<canvas id="heart"></canvas>
+<div class="card">
+<div id="emoji">❤️</div>
+<h1>Hi My Love</h1>
+<p id="text">Thank you for opening this little surprise.<br><br>I know you're still a little sulky... but before you continue being mad at me, can you spend just a few moments with me? ❤️</p>
+<div id="buttons"><button class="yes" onclick="next()">Continue ❤️</button></div>
+</div>
+<script>
+const scenes=[
+{emoji:"🌸",title:"Can I Steal a Minute? 🥺",text:"I know you're still a little sulky right now... but can you give me just a few minutes before you continue being mad at me? ❤️",buttons:["Okay 😒","Fine... 🙈"]},
+{emoji:"💖",title:"Quick Question",text:"Even though I'm a little annoying sometimes... I still make you smile once in a while, right? 🥹",buttons:["Maybe 😏","Of course ❤️"]},
+{emoji:"🥰",title:"One More",text:"We've shared so many cute moments together, haven't we? The laughs, the random conversations, and all those little things I never want to stop making with you.",buttons:["Yes 💕","Definitely ❤️"]},
+{emoji:"🥺",title:"About Today...",text:"I know I upset you, and I'm really sorry. I never wanted to make you feel unimportant or unloved. Seeing you sad hurts me too.",buttons:["Continue ❤️"]},
+{emoji:"💌",title:"From My Heart",text:"Thank you for loving me even on days when I'm not the best version of myself. I appreciate every little thing you do, and I never want you to doubt how much you mean to me.",buttons:["One Last Thing 🌹"]},
+{emoji:"🌹",title:"A Little Promise",text:"I can't promise to be perfect, but I promise to keep learning, understand you better, communicate better, and love you better every single day.",buttons:["Last Question ❤️"]},
+{emoji:"❤️",title:"Can I Have Your Smile Again?",text:"Will you forgive this slightly silly, slightly stubborn, but very, very in-love boyfriend? 🥺❤️",buttons:["Yes ❤️","No 🙈"]}
+];
+let page=-1;
+function next(){page++;const s=scenes[page];emoji.innerHTML=s.emoji;document.querySelector("h1").innerHTML=s.title;text.innerHTML=s.text;buttons.innerHTML="";
+if(page<6){s.buttons.forEach(()=>{});s.buttons.forEach(b=>buttons.innerHTML+=`<button class="yes" onclick="next()">${b}</button>`);}
+else{buttons.innerHTML=`<button class="yes" onclick="yes()">Yes ❤️</button><button class="no" id="no">No 🙈</button>`;document.getElementById("no").addEventListener("mouseover",move);}}
+function move(){let b=document.getElementById("no");b.style.position="absolute";b.style.left=Math.random()*70+"%";b.style.top=Math.random()*80+"%";}
+function yes(){emoji.innerHTML="🥹💖";document.querySelector("h1").innerHTML="Yaaay! ❤️";text.innerHTML="Thank you for giving me another smile. I know I won't always be perfect, but I'll always choose you, listen to you, and love you with all my heart. Now come here... you still owe me a hug. 🤗❤️ I love you so much.";buttons.innerHTML="";confetti();setTimeout(showBouquet,3000);}function showBouquet(){document.querySelector(".card").innerHTML=`<div class="bouquet"><div class="bouquet-art">💐</div><h1>Flowers For You ❤️</h1><p>Because every beautiful girl deserves beautiful flowers.<br><br>These may only be flowers on a screen, but if I could, I'd hand you a real bouquet with the biggest hug right after.<br><br>Thank you for staying, for listening, and for giving me another smile.<br><br>You deserve to feel loved today, tomorrow, and every single day.<br><br>I love you more than you'll ever know. 🌹❤️</p></div>`;}
+const canvas=document.getElementById("heart"),ctx=canvas.getContext("2d");canvas.width=innerWidth;canvas.height=innerHeight;let hearts=[];for(let i=0;i<120;i++)hearts.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,speed:1+Math.random()*3});
+(function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.font="20px serif";hearts.forEach(h=>{ctx.fillText("❤️",h.x,h.y);h.y+=h.speed;if(h.y>canvas.height){h.y=-20;h.x=Math.random()*canvas.width;}});requestAnimationFrame(draw);})();
+function confetti(){for(let i=0;i<300;i++){let c=document.createElement("div");c.innerHTML=["❤️","💖","💕","🌸","✨"][Math.floor(Math.random()*5)];c.style.position="fixed";c.style.left=Math.random()*100+"vw";c.style.top="-30px";c.style.fontSize=20+Math.random()*30+"px";c.style.transition="5s linear";document.body.appendChild(c);setTimeout(()=>c.style.transform=`translateY(${innerHeight+100}px) rotate(720deg)`,50);setTimeout(()=>c.remove(),5500);}}
+</script>
+</body></html>
